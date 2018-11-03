@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute , Router } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-movie',
@@ -9,17 +11,29 @@ import { MoviesService } from '../../services/movies.service';
 })
 export class MovieComponent implements OnInit {
   public movieObj;
-  constructor(private router : Router,private route : ActivatedRoute, private _moviesService : MoviesService) {
+  public safeURL;
+  public id;
+  constructor(private router : Router,private route : ActivatedRoute, private _moviesService : MoviesService, private _sanitizer: DomSanitizer) {
     
     //Get id by user selection
-    let id = parseInt(this.route.snapshot.paramMap.get("id"));
+    this.id = this.route.snapshot.paramMap.get("id");
+    console.log(this.id);
     //get Object by id 
-    let findMovieObj = this._moviesService.getMovie(id);
+    let findMovieObj = this._moviesService.getMovie(this.id);
+    console.log(findMovieObj);
     this.movieObj =  findMovieObj ? findMovieObj : this.goToPageNotFound();
+    this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+this.id);
     
    }
 
   ngOnInit() {
+  }
+  convertDate(dater){
+    var date = new Date(dater);
+    return date.getFullYear() +  "/" + (date.getMonth() + 1) +   "/" +  date.getDate() 
+  }
+  onDeleteMovie(){
+    this._moviesService.deleteMovie();
   }
   goToPageNotFound(){
     this.router.navigate(['/PageNotFound']);

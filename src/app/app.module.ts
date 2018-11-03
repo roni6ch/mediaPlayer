@@ -18,7 +18,6 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
 
 /* Pipes */
 import {FilterMoviesPipe} from './pipes/filter-movies.pipe';
-import {FilterGenerePipe} from './pipes/filter-genere.pipe';
 import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { OrderModule } from 'ngx-order-pipe';
         routingComponents,
         PageNotFoundComponent,
         FilterMoviesPipe,
-        FilterGenerePipe
         
     ],
     imports: [

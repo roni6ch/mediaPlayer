@@ -9,7 +9,7 @@ export class FilterMoviesPipe implements PipeTransform {
         if(!movies || !filter) {
             return movies;
         }
-        return movies.filter(movie => movie.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+        return movies.filter(movie => movie.snippet.title.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
     }
 
 }

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MoviesService} from '../../services/movies.service';
 import {Router , ActivatedRoute} from '@angular/router';
-import {genreType} from '../../../assets/content/movie.model';
 
 @Component({
     selector: 'app-movies-list',
@@ -11,6 +10,7 @@ import {genreType} from '../../../assets/content/movie.model';
 export class MoviesListComponent implements OnInit {
 
     public moviesList;
+    public moviesListPlayer;
     public generes;
     public genere;
     public order;
@@ -24,23 +24,27 @@ export class MoviesListComponent implements OnInit {
     }
 
     ngOnInit() {
-        //Get movie List
-        this._moviesService.getMovies().subscribe(data => this.moviesList = data);
-        //Get genere names and insert into select list
-        this.genere = "";
-        this.generes = Object.keys(genreType);
+        //Get media player box
+        this._moviesService.getMediaList().subscribe(data => {console.log(data['items']); this.moviesListPlayer = data['items'];});
+        
+     
         this.order = '';
         this.searchMovie = "";
-        this.orderList  = ['rate','name','length'];
+        this.orderList  = ['title','publishedAt'];
        
     }
-
+    convertDate(dater){
+        var date = new Date(dater);
+        return date.getFullYear() +  "/" + (date.getMonth() + 1) +   "/" +  date.getDate() 
+      }
     orderByFunc(order){
+        console.log(order);
         this.order = order;
+       this.moviesListPlayer.sort((a,b) => a['snippet'][order].localeCompare(b['snippet'][order]));
     }
     //Navigate to movie by id
     onSelectMovie(movie) {
-        this.router.navigate(['/movie', movie.id]);
+        this.router.navigate(['/movie', movie]);
     }
 
 }

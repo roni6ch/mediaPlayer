@@ -8,34 +8,31 @@
             name="searchMovie"
             [(ngModel)]="searchMovie"></div>
 
-        <select class="custom-select my-1 mr-sm-2" name="genere" [(ngModel)]="genere">
-            <option value="">All Generes</option>
-            <option *ngFor="let genere of generes" [value]="genere">
-                {{genere}}
-            </option>
-        </select>
-        
-        <select class="custom-select my-1 mr-sm-2" name="order" [(ngModel)]="order" (change)="orderByFunc(order)">
-            <option value="" selected >Order By</option>
-            <option *ngFor="let order of orderList" [value]="order" >
+        <select
+            class="custom-select my-1 mr-sm-2"
+            name="order"
+            [(ngModel)]="order"
+            (change)="orderByFunc(order)">
+            <option value="" selected disabled>Order By</option>
+            <option *ngFor="let order of orderList" [value]="order">
                 {{order}}
             </option>
         </select>
     </form>
 
     <div class="moviesListWrapper row">
-
         <div
-            (click)="onSelectMovie(movie)"
             class="col-md-4 col-lg-3 view overlay animated zoomIn"
-            *ngFor="let movie of moviesList | orderBy: order : reverse : caseInsensitive : comparator   | filterMovies:searchMovie | filterGenere:genere ">
-
+            (click)="onSelectMovie(movie.id.videoId)"
+            id="{{movie.id.videoId}}"
+            *ngFor="let movie of moviesListPlayer | filterMovies:searchMovie">
             <mdb-card>
                 <!--Card image-->
                 <img
                     class="img-fluid mx-auto"
-                    [src]="'./assets/content/images/movie-covers/'+movie?.img"
-                    alt="{{movie.name}}">
+                    [ngClass]="{'no-image': movie.snippet.thumbnails.default.url == 'undefined' || movie.snippet.thumbnails.default.url == ''}"
+                    [src]="movie.snippet.thumbnails.default.url" 
+                    alt="{{movie.snippet.channelTitle}}">
 
                     <div class="mask flex-center rgba-blue-light"></div>
                     <!--Card content-->
@@ -43,13 +40,17 @@
 
                         <!--Title-->
                         <mdb-card-title>
-                            <h6><i class="fa fa-star px-2 yellow-text"></i>{{movie.rate}}</h6>
-                            <h6> <i class="fa fa-film px-2"></i>{{movie.length}}</h6>
-                            <h4>{{movie.name}}</h4>
+                            <h6>
+                              {{movie.snippet.title}}</h6>
+                            <h6>
+                                <i class="fa fa-film px-2"></i>{{movie.snippet.liveBroadcastContent}}</h6>
+                            <h6>
+                                {{movie.snippet.channelTitle}}</h6>
+                                <h6>
+                                    {{convertDate(movie.snippet.publishedAt)}}</h6>
                         </mdb-card-title>
 
                     </mdb-card-body>
                 </mdb-card>
-
             </div>
         </div>

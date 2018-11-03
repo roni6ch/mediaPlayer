@@ -8,43 +8,43 @@
             <!--Title-->
             <mdb-card-title>
                 <h4>
-                    <strong>{{movieObj?.name}}</strong>
+                  <strong>{{movieObj?.snippet.title}}</strong>
                 </h4>
+            
+
             </mdb-card-title>
 
             <!--Card image-->
             <div class="view view-cascade overlay">
                 <img
                     class="img-fluid mx-auto"
-                    [src]="'./assets/content/images/movie-covers/'+movieObj?.img"
+                    [src]="movieObj?.snippet.thumbnails.high.url"
                     alt="{{movieObj?.name}}"></div>
                 <!--/Card image-->
-
-                <h5 class="rate">
-                    <i class="fa fa-star px-2 yellow-text"></i>
-                    <span>rate:
-                    </span>
-                    <strong>{{movieObj?.rate}}
-                    </strong>
-                </h5>
-
+<br/>
+<iframe [src]='safeURL' frameborder="0" allowfullscreen></iframe>
                 <mdb-card-text>
-                    {{movieObj?.description}}
+                   Description: <h5>{{movieObj?.snippet.description}}</h5>
                 </mdb-card-text>
 
                 <mdb-card-text>
                     <i class="fa fa-film px-2"></i>
-                    <span>length:
-                    </span>{{movieObj?.length}}</mdb-card-text>
+                    <span>Published At:
+                    </span>{{convertDate(movieObj?.snippet.publishedAt)}}</mdb-card-text>
                 <mdb-card-text>
                     <i class="fa fa-tag px-2"></i>
-                    <span>genres:
-                    </span>{{movieObj?.genres}}</mdb-card-text>
+                    <span>Channel Title:
+                    </span>{{movieObj?.snippet.channelTitle}}</mdb-card-text>
 
             </mdb-card-body>
 
         </mdb-card>
     </div>
+    <a
+    routerLink="/movies"
+    (click)="onDeleteMovie()"
+    class="btn btn-primary waves-light deleteBT"
+    mdbWavesEffect>Delete Movie</a>
     <a
         routerLink="/movies"
         class="btn btn-primary waves-light detailsBT"
