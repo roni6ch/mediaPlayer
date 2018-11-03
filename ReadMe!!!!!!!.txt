@@ -18,8 +18,8 @@ Ive used here with:
 
 How to Navigate:
 ----------------
-2. Gitlab link : https://gitlab.com/Roni691986/MediaPlayerBox
-3. Git: https://gitlab.com/Roni691986/MediaPlayerBox.git (you can download by pulling into your favorite IDE).
+2. Gitlab link : https://gitlab.com/Roni691986/mediaplayer
+3. Git: https://gitlab.com/Roni691986/mediaplayer.git (you can download by pulling into your favorite IDE).
 
 
 Thanks, and Have fun.
